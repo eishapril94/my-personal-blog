@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_blog_authors",
+  "info": {
+    "displayName": "Author",
+    "icon": "user",
+    "description": "Blog post author information"
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "avatar": {
+      "type": "media",
+      "multiple": false,
+      "required": false
+    }
+  }
+}

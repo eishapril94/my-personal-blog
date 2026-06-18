@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
+    <title>Blog | Apri Yulda - Public Health Insights</title>
+    <meta name="description" content="Explore articles on public health, research, community empowerment, and data-driven health strategies.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/blog.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">AY</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="../index.html#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../index.html#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../index.html#experience">Experience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../index.html#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../index.html#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link admin-link" href="#" target="_blank">🔒 Admin</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="container">
+            <div class="blog-hero-content" data-aos="fade-up">
+                <h1>Insights & Stories</h1>
+                <p class="blog-hero-subtitle">Exploring the intersection of public health, data, and community impact</p>
+
+                <div class="blog-controls" data-aos="fade-up" data-aos-delay="200">
+                    <div class="blog-search">
+                        <span class="blog-search-icon">🔍</span>
+                        <input type="text" id="blog-search" placeholder="Search articles...">
+                    </div>
+                    <div class="blog-filter" id="blog-filter">
+                        <!-- Filter buttons rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="blog-section">
+        <div class="container">
+            <!-- Featured Post -->
+            <div class="featured-post" id="featured-post" data-aos="fade-up">
+                <!-- Featured post rendered by JS -->
+            </div>
+
+            <!-- Blog Grid -->
+            <div class="blog-grid" id="blog-grid">
+                <!-- Blog cards rendered by JS -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-wrapper" id="pagination">
+                <button class="pagination-btn" disabled>←</button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn">→</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content" data-aos="fade-up">
+                <h3>Stay Updated</h3>
+                <p>Get the latest public health insights and research updates delivered to your inbox.</p>
+                <form class="newsletter-form" id="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Apri Yulda. Built with passion for public health and community empowerment.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/blog.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "posts",
+  "info": {
+    "singularName": "post",
+    "pluralName": "posts",
+    "displayName": "Post"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "excerpt": {
+      "type": "text"
+    },
+    "category": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "json"
+    },
+    "readTime": {
+      "type": "integer"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "coverImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false
+    },
+    "author": {
+      "type": "component",
+      "repeatable": false,
+      "component": "blog.author"
+    }
+  }
+}
