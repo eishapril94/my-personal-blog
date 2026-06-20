@@ -10,6 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ping Render API
-        run: |
-          curl -s -o /dev/null -w "%{http_code}" \
-            "https://my-personal-blog-areb.onrender.com/api/posts?populate=*&sort[0]=publishedAt:desc"
+        run: curl -s -o /dev/null -w "%{http_code}" --max-time 30 'https://my-personal-blog-areb.onrender.com/api/posts?populate=*&sort[0]=publishedAt:desc'
