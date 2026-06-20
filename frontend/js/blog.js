@@ -408,7 +408,7 @@ async function initBlogDetailPage() {
     if (heroAuthorName) heroAuthorName.textContent = author.name;
 
     const contentDiv = document.getElementById('detail-content');
-    if (contentDiv) contentDiv.innerHTML = post.content || post.excerpt;
+    if (contentDiv) contentDiv.innerHTML = marked.parse(post.content || post.excerpt);
 
     const tagsContainer = document.getElementById('detail-tags');
     if (tagsContainer && post.tags) {
