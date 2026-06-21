@@ -1,3 +1,108 @@
+// ===== LOADER =====
+document.body.style.overflow = 'hidden';
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const loader = document.getElementById('loader');
+        if (loader) loader.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }, 1800);
+});
+
+// ===== THEME TOGGLE =====
+const themeToggle = document.getElementById('themeToggle');
+const html = document.documentElement;
+const savedTheme = localStorage.getItem('ay-theme') || 'light';
+html.setAttribute('data-theme', savedTheme);
+if (themeToggle) {
+    themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    themeToggle.addEventListener('click', () => {
+        const current = html.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('ay-theme', next);
+        themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+}
+
+// ===== HERO CANVAS PARTICLES =====
+(function initCanvas() {
+    const canvas = document.getElementById('heroCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [], mouse = { x: -9999, y: -9999 };
+    const PARTICLE_COUNT = 60;
+    const CONNECTION_DIST = 130;
+
+    function resize() {
+        W = canvas.width = canvas.offsetWidth;
+        H = canvas.height = canvas.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    canvas.addEventListener('mousemove', e => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+    });
+    canvas.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+    class Particle {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * W;
+            this.y = Math.random() * H;
+            this.vx = (Math.random() - .5) * 0.3;
+            this.vy = (Math.random() - .5) * 0.3;
+            this.r = Math.random() * 2 + 0.5;
+            this.alpha = Math.random() * 0.4 + 0.1;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            const dx = this.x - mouse.x, dy = this.y - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 100) {
+                this.x += dx / dist * 0.8;
+                this.y += dy / dist * 0.8;
+            }
+            if (this.x < 0 || this.x > W) this.vx *= -1;
+            if (this.y < 0 || this.y > H) this.vy *= -1;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,255,255,${this.alpha})`;
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+    function loop() {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const d = Math.sqrt(dx * dx + dy * dy);
+                if (d < CONNECTION_DIST) {
+                    const opacity = (1 - d / CONNECTION_DIST) * 0.12;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(255,255,255,${opacity})`;
+                    ctx.lineWidth = 0.6;
+                    ctx.stroke();
+                }
+            }
+        }
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(loop);
+    }
+    loop();
+})();
+
 // ===== AOS INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', function() {
     if (typeof AOS !== 'undefined') {
@@ -13,10 +118,12 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===== NAVBAR SCROLL EFFECT =====
 window.addEventListener('scroll', function() {
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.classList.add('navbar-scrolled');
-    } else {
-        navbar.classList.remove('navbar-scrolled');
+    if (navbar) {
+        if (window.scrollY > 50) {
+            navbar.classList.add('navbar-scrolled');
+        } else {
+            navbar.classList.remove('navbar-scrolled');
+        }
     }
 });
 
@@ -33,7 +140,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 behavior: 'smooth'
             });
 
-            // Close mobile menu if open
             const navbarCollapse = document.querySelector('.navbar-collapse');
             if (navbarCollapse && navbarCollapse.classList.contains('show')) {
                 navbarCollapse.classList.remove('show');
@@ -57,7 +163,6 @@ function animateCounter(element, target, duration = 2000) {
     }, 16);
 }
 
-// Trigger counter animation when stats section is in view
 const statsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -110,7 +215,6 @@ if (window.innerWidth > 1024) {
     }
     animateOutline();
 
-    // Scale cursor on hover
     document.querySelectorAll('a, button, .skill-tag, .project-card, .blog-card').forEach(el => {
         el.addEventListener('mouseenter', () => {
             cursorDot.style.transform = 'scale(2)';
@@ -209,7 +313,6 @@ class TextScramble {
     }
 }
 
-// Initialize scramble effect on hero subtitle
 const heroSubtitle = document.querySelector('.hero-subtitle');
 if (heroSubtitle) {
     const fx = new TextScramble(heroSubtitle);
@@ -251,3 +354,45 @@ window.addEventListener('scroll', () => {
     const scrolled = (scrollTop / scrollHeight) * 100;
     progressBar.style.width = scrolled + '%';
 });
+
+// ===== CONTACT FORM =====
+if (typeof emailjs !== 'undefined') {
+    emailjs.init('Nu4I7krMe_z5vfuHv');
+
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const success = document.getElementById('formSuccess');
+            const originalText = btn.textContent;
+
+            btn.textContent = 'Sending…';
+            btn.disabled = true;
+
+            const templateParams = {
+                from_name: document.getElementById('name').value,
+                from_email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value,
+            };
+
+				emailjs.send("service_ae4aawq","template_7yewsj3", templateParams)
+                .then(() => {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                    if (success) {
+                        success.classList.add('show');
+                        setTimeout(() => success.classList.remove('show'), 4000);
+                    }
+                    this.reset();
+                })
+                .catch((err) => {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                    alert('Failed to send. Please try again.');
+                    console.error(err);
+                });
+        });
+    }
+}
